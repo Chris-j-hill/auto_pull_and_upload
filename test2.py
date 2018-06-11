@@ -98,21 +98,21 @@ if len(sys.argv) == 1:
     print("no input arguments, exiting script")
     exit()
 
-elif sys.argv[1] == "boards.txt" and file_exists == True:
+elif sys.argv[1] == config_file and file_exists == True:
     parameters_from_file = True
     file = open(config_file, "r")
     lines = file.readlines()
-elif sys.argv[1] == "boards.txt" and file_exists == False:
+elif sys.argv[1] == config_file and file_exists == False:
     print("file not found, exiting script")
     exit()
 else:
-    print("command line error")
-    exit()
+    print("No file provided, assuming boards as command line arguments")
+    
 	
 # initial pull and upload
-#os.system('git pull')
+os.system('git pull')
 compile_code()
-'''
+
 while(1):
 	os.system('git fetch')
 	git_diff_output = subprocess.check_output(['git', 'diff', 'origin'])
@@ -125,4 +125,4 @@ while(1):
 
 	time.sleep(5)
 
-'''
+
