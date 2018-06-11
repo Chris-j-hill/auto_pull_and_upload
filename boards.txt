@@ -1,0 +1,2 @@
+mega ACM0
+uno dev/ttyACM1

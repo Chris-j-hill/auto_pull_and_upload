@@ -12,10 +12,10 @@ def get_arch(loc):
 	except:	#get from command line
 		device = sys.argv[2*loc-1]
 	else:	#get from file
-		line = file.readline(loc)
-		device,port = line.split("\t")
+		line = lines[loc-1]
+		device,port = line.split(" ")
 		
-	print("Device found :" + device)
+	
 	if device == "mega" or device == "Mega" or device == "MEGA":
 		arch = " --board arduino:avr:mega:cpu=atmega2560"
 	elif device == "uno" or device == "Uno" or device == "UNO":
@@ -24,6 +24,8 @@ def get_arch(loc):
 		arch = " --board arduino:sam:due"
 	else:
 		arch = ""
+		
+	print("\n Architecture found :" + arch)
 	return arch	
 
 def get_port(loc):
@@ -33,10 +35,15 @@ def get_port(loc):
 	except:
 		port = " --port /dev/tty" + sys.argv[2*loc]
 	else:
-		line = file.readline(loc)
-		device,port = line.split("\t")
+		line = lines[loc-1]
+		device,port = line.split(" ")
+		if len(port) <6:
+                    port = " --port /dev/tty" +port
+                    
+                else:
+                    port = " --port " +port
 		
-	print("port found :" + port)
+	print("\n Port found :" + port)
 	return port
 
 	
@@ -46,7 +53,6 @@ def get_mode():
 	except:
 		try:
 			verify
-		
 		except NameError:
 			modeString = " --upload"
 		else:
@@ -65,8 +71,9 @@ def compile_code():
 	except: #num of board arguments in command line
 		num_boards = len(sys.argv)/2+1
 	else: #num lines in file
-		num_boards = sum(1 for line in open(config_file)
+		num_boards = sum(1 for line in open(config_file))+1
 	
+	print(num_boards)
 	for x in range(1,num_boards):
 		
 		arch = get_arch(x)
@@ -85,15 +92,22 @@ def compile_code():
 verify = True
 config_file = "boards.txt"
 file_exists = os.path.isfile(config_file)
-print("file exists : " file_exists)
+print("file exists : " + str(file_exists))
 
-if sys.argv[2] == "boards.txt" and file_exists == True
-	parameters_from_file = True
-	file = open(config_file, "r")
-elif sys.argv[2] == "boards.txt" and file_exists == False
-		print("file not found, exiting script")
-	exit()
-	
+if len(sys.argv) == 1:
+    print("no input arguments, exiting script")
+    exit()
+
+elif sys.argv[1] == "boards.txt" and file_exists == True:
+    parameters_from_file = True
+    file = open(config_file, "r")
+    lines = file.readlines()
+elif sys.argv[1] == "boards.txt" and file_exists == False:
+    print("file not found, exiting script")
+    exit()
+else:
+    print("command line error")
+    exit()
 	
 # initial pull and upload
 #os.system('git pull')
