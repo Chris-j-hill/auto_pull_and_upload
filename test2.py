@@ -63,11 +63,11 @@ def compile_code():
 	try:
 		parameters_from_file
 	except: #num of board arguments in command line
-		num_boards = range(1,len(sys.argv)/2+1)
+		num_boards = len(sys.argv)/2+1
 	else: #num lines in file
 		num_boards = sum(1 for line in open(config_file)
 	
-	for x in num_boards:
+	for x in range(1,num_boards):
 		
 		arch = get_arch(x)
 		port = get_port(x)
@@ -85,13 +85,13 @@ def compile_code():
 verify = True
 config_file = "boards.txt"
 file_exists = os.path.isfile(config_file)
-print("file exists : " fiel_exists)
+print("file exists : " file_exists)
 
 if sys.argv[2] == "boards.txt" and file_exists == True
 	parameters_from_file = True
 	file = open(config_file, "r")
 elif sys.argv[2] == "boards.txt" and file_exists == False
-	print("file not found, exiting script")
+		print("file not found, exiting script")
 	exit()
 	
 	
