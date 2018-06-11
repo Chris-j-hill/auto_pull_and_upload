@@ -87,11 +87,14 @@ config_file = "boards.txt"
 file_exists = os.path.isfile(config_file)
 print("file exists : " fiel_exists)
 
-if sys.argv[2] == "boards.txt" and file_exists
+if sys.argv[2] == "boards.txt" and file_exists == True
 	parameters_from_file = True
 	file = open(config_file, "r")
-
-
+elif sys.argv[2] == "boards.txt" and file_exists == False
+	print("file not found, exiting script")
+	exit()
+	
+	
 # initial pull and upload
 #os.system('git pull')
 compile_code()
