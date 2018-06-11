@@ -79,8 +79,8 @@ def compile_code():
 		arch = get_arch(x)
 		port = get_port(x)
 					
-		print('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/blink_test/blink_test.ino')
-		#os.system('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/blink_test/blink_test.ino')
+		#print('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/blink_test/blink_test.ino')
+		os.system('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/blink_test/blink_test.ino')
 	return
 
 
