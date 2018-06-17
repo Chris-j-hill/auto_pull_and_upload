@@ -12,7 +12,7 @@ def get_arch(loc):
 	except:	#get from command line
 		device = sys.argv[2*loc-1]
 	else:	#get from file
-		line = lines[loc-1]
+		line = lines[loc]
 		device,port = line.split(" ")
 		
 	
@@ -35,13 +35,13 @@ def get_port(loc):
 	except:
 		port = " --port /dev/tty" + sys.argv[2*loc]
 	else:
-		line = lines[loc-1]
+		line = lines[loc]
 		device,port = line.split(" ")
 		if len(port) <6:
-                    port = " --port /dev/tty" +port
+            port = " --port /dev/tty" + port
                     
-                else:
-                    port = " --port " +port
+        else:
+            port = " --port " + port
 		
 	print("\n Port found :" + port)
 	return port
@@ -71,7 +71,7 @@ def compile_code():
 	except: #num of board arguments in command line
 		num_boards = len(sys.argv)/2+1
 	else: #num lines in file
-		num_boards = sum(1 for line in open(config_file))+1
+		num_boards = sum(1 for line in open(config_file))
 	
 	print(num_boards)
 	for x in range(1,num_boards):
@@ -79,9 +79,10 @@ def compile_code():
 		arch = get_arch(x)
 		port = get_port(x)
 					
-		#print('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/blink_test/blink_test.ino')
-		os.system('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/blink_test/blink_test.ino')
-	return
+		#os.system('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/'+ file +'/' + file + '.ino')
+		print('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/'+ file +'/' + file + '.ino')
+
+		return
 
 
 #______________________
@@ -93,6 +94,7 @@ verify = True
 config_file = "boards.txt"
 file_exists = os.path.isfile(config_file)
 print("file exists : " + str(file_exists))
+
 
 if len(sys.argv) == 1:
     print("no input arguments, exiting script")
@@ -108,7 +110,15 @@ elif sys.argv[1] == config_file and file_exists == False:
 else:
     print("No file provided, assuming boards as command line arguments")
     
-	
+if parameters_from_file == False:
+	file = sys.argv(len(sys.argv)-1)		#last element
+else: 
+	file = lines[1]							#first line of 
+
+print(file)
+
+
+	'''
 # initial pull and upload
 os.system('git pull')
 compile_code()
@@ -124,5 +134,5 @@ while(1):
 		compile_code()
 
 	time.sleep(5)
-
+'''
 
