@@ -6,10 +6,8 @@ import sys
 
 def get_arch(loc):
 
-	try:
-		parameters_from_file
-		
-	except:	#get from command line
+	if parameters_from_file == False:
+		#get from command line
 		device = sys.argv[2*loc-1]
 	else:	#get from file
 		line = lines[loc]
@@ -30,59 +28,57 @@ def get_arch(loc):
 
 def get_port(loc):
 	
-	try:
-		parameters_from_file
-	except:
-		port = " --port /dev/tty" + sys.argv[2*loc]
+	if parameters_from_file == False:
+            port = " --port /dev/tty" + sys.argv[2*loc]
 	else:
-		line = lines[loc]
-		device,port = line.split(" ")
-		if len(port) <6:
-            port = " --port /dev/tty" + port
+            line = lines[loc]
+            device,port = line.split(" ")
+            if len(port) <6:
+                port = " --port /dev/tty" + port
+                
+            else:
+                port = " --port " + port
+            
+            if (len(lines)-1) != loc:
+                port = port[:-1]
                     
-        else:
-            port = " --port " + port
-		
-	print("\n Port found :" + port)
+	#print("\n Port found :" + port)
 	return port
 
 	
 def get_mode():
-	try:
-		parameters_from_file
-	except:
-		try:
-			verify
-		except NameError:
-			modeString = " --upload"
-		else:
-			modeString = " --verify"
-	else:
-		modeString = ""
-		
+	
+        try:
+                verify
+        except NameError:
+                modeString = " --upload"
+        else:
+                modeString = " --verify"
+			
 	return modeString
 
 def compile_code():
 
 	mode = get_mode()
 	
-	try:
-		parameters_from_file
-	except: #num of board arguments in command line
-		num_boards = len(sys.argv)/2+1
+	if parameters_from_file == False:
+	 #num of board arguments in command line
+            
+		num_boards = len(sys.argv)/2
+		
 	else: #num lines in file
 		num_boards = sum(1 for line in open(config_file))
 	
-	print(num_boards)
+	
 	for x in range(1,num_boards):
 		
 		arch = get_arch(x)
 		port = get_port(x)
 					
-		#os.system('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/'+ file +'/' + file + '.ino')
-		print('~/Downloads/arduino-1.8.5/arduino' + mode + arch + port + ' ~/Desktop/rasp_pi_auto_download_test/'+ file +'/' + file + '.ino')
+		#print(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
+                os.system(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
 
-		return
+	return
 
 
 #______________________
@@ -92,8 +88,12 @@ def compile_code():
 # will upload if not defined
 verify = True
 config_file = "boards.txt"
+path_to_arduino = "~/Downloads/arduino-1.8.5/arduino"
+path_to_this_dir = os.path.dirname(os.path.abspath(__file__))
+
 file_exists = os.path.isfile(config_file)
-print("file exists : " + str(file_exists))
+print("boards.txt exists : " + str(file_exists))
+
 
 
 if len(sys.argv) == 1:
@@ -109,16 +109,26 @@ elif sys.argv[1] == config_file and file_exists == False:
     exit()
 else:
     print("No file provided, assuming boards as command line arguments")
+    parameters_from_file = False
     
 if parameters_from_file == False:
-	file = sys.argv(len(sys.argv)-1)		#last element
+	file = sys.argv[len(sys.argv)-1]		#last element
 else: 
-	file = lines[1]							#first line of 
+	file = lines[0]							#first line of 
+        file = file[:-1]
+target_exists = os.path.isfile(file + '/' + file +'.ino')
 
-print(file)
+#print(file + '/' + file +'.ino')
+
+if target_exists == False:
+    print('target file does not exist, exiting script')
+    print('target file:' + file + '/' + file +'.ino')
+    exit()
+    
 
 
-	'''
+
+
 # initial pull and upload
 os.system('git pull')
 compile_code()
@@ -134,5 +144,5 @@ while(1):
 		compile_code()
 
 	time.sleep(5)
-'''
+
 

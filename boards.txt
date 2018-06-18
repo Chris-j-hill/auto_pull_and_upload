@@ -1,2 +1,3 @@
-mega ACM0
+blink_test2
+uno ACM0
 uno dev/ttyACM1
