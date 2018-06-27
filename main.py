@@ -151,7 +151,7 @@ log_data(path_to_log_file)
 while(1):
 	os.system('git fetch')
 	git_diff_output = subprocess.check_output(['git', 'diff', 'origin'])
-	print (git_diff_output)
+	#print (git_diff_output)
 	if git_diff_output != "":
 		print("\n NEW GIT PUSH DETECTED \n ")
 		os.system('git pull')
