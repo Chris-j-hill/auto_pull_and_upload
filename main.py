@@ -99,6 +99,12 @@ config_file = "boards.txt"
 log_file = "git_data_log.txt"
 path_to_arduino = "~/Downloads/arduino-1.8.5/arduino"
 path_to_this_dir = os.path.dirname(os.path.abspath(__file__))
+this_dir = path_to_this_dir.split("/")
+this_dir = this_dir[-1]
+path_to_log_file = path_to_this_dir
+path_to_log_file = path_to_log_file.replace(this_dir, log_file)
+#print(path_to_log_file)
+
 
 file_exists = os.path.isfile(config_file)
 print("boards.txt exists : " + str(file_exists))
@@ -140,7 +146,7 @@ if target_exists == False:
 # initial pull and upload
 os.system('git pull')
 compile_code()
-log_data(log_file)
+log_data(path_to_log_file)
 
 while(1):
 	os.system('git fetch')
@@ -151,7 +157,7 @@ while(1):
 		os.system('git pull')
 		
 		compile_code()
-		log_data(log_file)
+		log_data(path_to_log_file)
 
 	time.sleep(5)
 
