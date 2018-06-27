@@ -83,9 +83,9 @@ def compile_code():
 def log_data(file):
         git_data = subprocess.check_output(['git', 'log', '-1', '--abbrev-commit'])
             
-        with open(file, 'w', 0) as f:
-            f.write(git_data);
-            f.close();
+        f = open(file, 'w')
+        f.write(git_data)
+        f.close()
         return
 
 
