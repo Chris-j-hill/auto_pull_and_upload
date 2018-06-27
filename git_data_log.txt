@@ -1,5 +1,0 @@
-commit 96a0a11
-Author: Chris-j-hill <chris.j.hill94@gmail.com>
-Date:   Wed Jun 27 20:18:21 2018 +0000
-
-    remove semicolons...
