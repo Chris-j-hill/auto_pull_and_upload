@@ -79,7 +79,7 @@ def compile_code():
                 #os.system(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
 
 	return
-'''
+
 def log_data(file):
         git_data = subprocess.check_output(['git', 'log', '-1', '--abbrev-commit'])
             
@@ -87,7 +87,7 @@ def log_data(file):
         f.write(git_data)
         f.close()
         return
-'''
+
 
 #______________________
 #PROGRAM
@@ -140,7 +140,7 @@ if target_exists == False:
 # initial pull and upload
 os.system('git pull')
 compile_code()
-#log_data(log_file)
+log_data(log_file)
 
 while(1):
 	os.system('git fetch')
