@@ -1,0 +1,5 @@
+commit f3aebd9
+Author: Chris Hill <chris.j.hill94@gmail.com>
+Date:   Mon Jun 18 14:48:21 2018 +0100
+
+    kill script

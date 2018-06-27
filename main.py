@@ -75,10 +75,18 @@ def compile_code():
 		arch = get_arch(x)
 		port = get_port(x)
 					
-		#print(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
-                os.system(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
+		print(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
+                #os.system(path_to_arduino + mode + arch + port + ' ' + path_to_this_dir + '/'+ file +'/' + file + '.ino')
 
 	return
+
+def log_data(file):
+    git_data = subprocess.check_output(['git', 'log', '-1', '--abbrev-commit'])
+	
+    with open(file, 'w', 0) as f:
+        f.write(git_data);
+	f.close();
+    return
 
 
 #______________________
@@ -88,6 +96,7 @@ def compile_code():
 # will upload if not defined
 verify = True
 config_file = "boards.txt"
+log_file = "git_data_log.txt"
 path_to_arduino = "~/Downloads/arduino-1.8.5/arduino"
 path_to_this_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -118,7 +127,6 @@ else:
         file = file[:-1]
 target_exists = os.path.isfile(file + '/' + file +'.ino')
 
-#print(file + '/' + file +'.ino')
 
 if target_exists == False:
     print('target file does not exist, exiting script')
@@ -132,16 +140,18 @@ if target_exists == False:
 # initial pull and upload
 os.system('git pull')
 compile_code()
+log_data(log_file);
 
 while(1):
 	os.system('git fetch')
 	git_diff_output = subprocess.check_output(['git', 'diff', 'origin'])
-	
+	print (git_diff_output)
 	if git_diff_output != "":
 		print("\n NEW GIT PUSH DETECTED \n ")
 		os.system('git pull')
 		
 		compile_code()
+		log_data(log_file);
 
 	time.sleep(5)
 
