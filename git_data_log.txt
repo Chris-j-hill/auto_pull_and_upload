@@ -1,5 +1,0 @@
-commit b036de7
-Author: Chris-j-hill <chris.j.hill94@gmail.com>
-Date:   Wed Jun 27 20:07:03 2018 +0000
-
-    gitignore update
