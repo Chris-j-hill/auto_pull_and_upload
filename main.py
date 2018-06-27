@@ -81,12 +81,12 @@ def compile_code():
 	return
 
 def log_data(file):
-    git_data = subprocess.check_output(['git', 'log', '-1', '--abbrev-commit'])
-	
-    with open(file, 'w', 0) as f:
-        f.write(git_data);
-	f.close();
-    return
+        git_data = subprocess.check_output(['git', 'log', '-1', '--abbrev-commit'])
+            
+        with open(file, 'w', 0) as f:
+            f.write(git_data);
+            f.close();
+        return
 
 
 #______________________
@@ -140,7 +140,7 @@ if target_exists == False:
 # initial pull and upload
 os.system('git pull')
 compile_code()
-log_data(log_file);
+log_data(log_file)
 
 while(1):
 	os.system('git fetch')
@@ -151,7 +151,7 @@ while(1):
 		os.system('git pull')
 		
 		compile_code()
-		log_data(log_file);
+		log_data(log_file)
 
 	time.sleep(5)
 
