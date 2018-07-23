@@ -1,4 +1,4 @@
-simple test script written in python for teh raspberry pi
+simple test script written in python for the raspberry pi
 
 program fetches github repo, check is changes have been made and if so, compiles and uploads to an array of arduino boards connected
 
