@@ -7,5 +7,6 @@ connected arduinos can be defined as a list of arguments (name port name port et
 
 command line example:
 
-python test2.py boards.txt
-python test2.py mega ACM0 uno USB1 due ACM1
+python test2.py boards.txt blink_test
+
+python test2.py mega ACM0 uno USB1 due ACM1 blink_test2
